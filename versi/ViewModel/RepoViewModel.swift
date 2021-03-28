@@ -6,33 +6,50 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Kingfisher
 
-struct RepoViewModel {
-    var imageUrl: URL?
-    var name: String
-    var description: String
-    var numberOfForks: Int
-    var language: String
-    var numberOfContributors: Int
-    var repoUrl: URL?
+class RepoViewModel {
     
-    init(repoModelData: RepoModelData) {
-        self.name = repoModelData.name ?? ""
-        self.description = repoModelData.itemDescription ?? ""
-        self.numberOfForks = repoModelData.forks ?? 0
-        self.language = repoModelData.language ?? ""
-        self.numberOfContributors = 999 // repoModelData.numberOfContributors ?? 0
-        if let url = URL(string: repoModelData.htmlURL ?? "") {
-            self.repoUrl = url
-        }else {
-            self.repoUrl = nil
+    let disposeBag = DisposeBag()
+    var query = BehaviorRelay<String>(value: "Swift")
+    public private (set) var isLoading = BehaviorRelay<Bool>(value: false)
+    public private (set) var isValidDataSource = BehaviorRelay<Bool>(value: false)
+    public private (set) var errorString = BehaviorRelay<String>(value: "")
+    public private (set) var dataSource = PublishSubject<[RepoModelData]>()
+    
+    init() {
+        query.asObservable().subscribe(onNext: { [weak self] (query) in
+            if !query.isEmpty {
+                self?.getReposData()
+            }
+            })
+            .disposed(by: disposeBag)
         }
-        if let imgUrl = URL(string: repoModelData.owner?.avatarURL ?? "") {
-            self.imageUrl = imgUrl
-        }else {
-            self.imageUrl = nil
+    
+}
+
+
+// MARK: - NETWORKING
+extension RepoViewModel {
+    func getReposData() {
+        isLoading.accept(true)
+        NetworkServices.request(endPoint: Versi_EndPoints.listCompletedOrders(q: query.value), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
+            self.isLoading.accept(false)
+            if reposData != nil && statusCode == 200 {
+                if let data = reposData?.items {
+                    self.isValidDataSource.accept(true)
+                    self.errorString.accept("")
+                    self.dataSource.onNext(data)
+                }else {
+                    self.isValidDataSource.accept(false)
+                    self.errorString.accept(errorString ?? "")
+                }
+            }else {
+                self.isValidDataSource.accept(false)
+                self.errorString.accept(errorString ?? "")
+            }
         }
     }
-    
 }

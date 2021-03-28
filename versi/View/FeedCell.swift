@@ -20,23 +20,22 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var viewReedMeBtn: UIButton!
     
     public private (set) var repoUrl: URL?
-    var openReedmeBlock: (() -> Void)? = nil
     var disposeBag = DisposeBag()
     
-    var repo: RepoViewModel? {
+    var repo: RepoModelData? {
         didSet {
             repoNameLbl.text = repo?.name
-            repoDescLbl.text = repo?.description
-            numOfForksLbl.text = "\(repo?.numberOfForks ?? 0)"
+            repoDescLbl.text = repo?.itemDescription
+            numOfForksLbl.text = "\(repo?.forksCount ?? 0)"
             languageLbl.text = repo?.language
-            repoUrl = repo?.repoUrl
-            if let url = repo?.imageUrl {
+            let reUrl = repo?.htmlURL ?? ""
+            if let url = URL(string: reUrl) {
+                repoUrl = url
+            }
+            let imUrl = repo?.owner?.avatarURL ?? ""
+            if let url = URL(string: imUrl) {
                 repoImgView.downsampleImageForURL(imageLink: url)
             }
-            
-            viewReedMeBtn.rx.tap.subscribe(onNext: {
-                self.openReedmeBlock?()
-            }).disposed(by: disposeBag)
         }
     }
     
@@ -53,10 +52,6 @@ class FeedCell: UITableViewCell {
     override func prepareForReuse() {
         repoImgView.kf.cancelDownloadTask()
         repoImgView.image = nil
-    }
-
-    @IBAction func reedmeBtnClicked(_ sender: UIButton) {
-        
     }
     
 }

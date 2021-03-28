@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="425" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Mk-Ff-wbk">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="425" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Mk-Ff-wbk">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="425" id="8ly-FR-nbg" customClass="FeedCell" customModule="versi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="425" id="8ly-FR-nbg" customClass="FeedCell" customModule="versi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="425"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8ly-FR-nbg" id="xB7-Tn-ad2">
@@ -104,7 +104,7 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPU-6q-7h7">
-                                                                    <rect key="frame" x="80" y="348" width="230" height="50"/>
+                                                                    <rect key="frame" x="50" y="348" width="290" height="50"/>
                                                                     <color key="backgroundColor" systemColor="labelColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="n4f-Ic-9hB"/>
@@ -124,9 +124,6 @@
                                                                             <color key="value" systemColor="systemBackgroundColor"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
-                                                                    <connections>
-                                                                        <action selector="reedmeBtnClicked:" destination="8ly-FR-nbg" eventType="touchUpInside" id="OtZ-c3-RMK"/>
-                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -134,11 +131,11 @@
                                                                 <constraint firstItem="608-wm-v20" firstAttribute="leading" secondItem="N0R-nd-KiR" secondAttribute="leading" id="5hA-TX-vEX"/>
                                                                 <constraint firstAttribute="bottom" secondItem="rPU-6q-7h7" secondAttribute="bottom" id="6LJ-lT-Ria"/>
                                                                 <constraint firstItem="Un4-mc-wI6" firstAttribute="leading" secondItem="N0R-nd-KiR" secondAttribute="leading" id="6rG-c4-hcd"/>
-                                                                <constraint firstItem="rPU-6q-7h7" firstAttribute="leading" secondItem="N0R-nd-KiR" secondAttribute="leading" constant="80" id="FH0-VE-H5N"/>
+                                                                <constraint firstItem="rPU-6q-7h7" firstAttribute="leading" secondItem="N0R-nd-KiR" secondAttribute="leading" constant="50" id="FH0-VE-H5N"/>
                                                                 <constraint firstItem="SqH-Mn-Cnk" firstAttribute="leading" secondItem="N0R-nd-KiR" secondAttribute="leading" id="SCX-EV-lDN"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Un4-mc-wI6" secondAttribute="trailing" id="U8z-Cd-EHS"/>
                                                                 <constraint firstAttribute="trailing" secondItem="SqH-Mn-Cnk" secondAttribute="trailing" id="eqB-er-UZu"/>
-                                                                <constraint firstAttribute="trailing" secondItem="rPU-6q-7h7" secondAttribute="trailing" constant="80" id="r9g-t9-BN0"/>
+                                                                <constraint firstAttribute="trailing" secondItem="rPU-6q-7h7" secondAttribute="trailing" constant="50" id="r9g-t9-BN0"/>
                                                                 <constraint firstAttribute="trailing" secondItem="608-wm-v20" secondAttribute="trailing" id="yTe-BO-9vd"/>
                                                             </constraints>
                                                         </stackView>

@@ -20,14 +20,18 @@ class SearchCell: UITableViewCell {
     
     public private (set) var repoUrl: URL?
     
-    var repo: RepoViewModel? {
+    var repo: RepoModelData? {
         didSet {
             nameLbl.text = repo?.name
-            descriptionLbl.text = repo?.description
-            forksCountLbl.text = "\(repo?.numberOfForks ?? 0)"
+            descriptionLbl.text = repo?.itemDescription
+            forksCountLbl.text = "\(repo?.forksCount ?? 0)"
             languageLbl.text = repo?.language
-            repoUrl = repo?.repoUrl
-            if let url = repo?.imageUrl {
+            let reUrl = repo?.htmlURL ?? ""
+            if let url = URL(string: reUrl) {
+                repoUrl = url
+            }
+            let imUrl = repo?.owner?.avatarURL ?? ""
+            if let url = URL(string: imUrl) {
                 imgView.downsampleImageForURL(imageLink: url)
             }
         }

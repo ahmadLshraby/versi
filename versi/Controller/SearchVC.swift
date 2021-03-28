@@ -15,35 +15,58 @@ class SearchVC: UIViewController {
     @IBOutlet weak var searchBar: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
-    var dataSource = PublishSubject<[RepoModelData]>()
+    let repoViewModel = RepoViewModel()
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.becomeFirstResponder()
         bindElements()
+        subscribeToLoading()
+        subscribeToValidData()
         tableView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     
     func bindElements() {
-        let searchResult = searchBar.rx.text
+        searchBar.rx.text
             .orEmpty
-            .debounce(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
+            .throttle(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
             .map {
-            $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            }.flatMapLatest { query -> Observable<[RepoModelData]> in
-                let q = query ?? ""
-                if q.isEmpty{
-                    return .just([])
-                }else{
-                    return self.getReposData(query: q)
-                }
-            }.observe(on: MainScheduler.instance)
+                ($0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
+            }
+            .bind(to: repoViewModel.query)
+            .disposed(by: disposeBag)
         
-        searchResult.bind(to: tableView.rx.items(cellIdentifier: "SearchCell")) {
+        repoViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "SearchCell")) {
             (row, repo: RepoModelData, cell: SearchCell) in
-            let repoVM = RepoViewModel(repoModelData: repo)
-            cell.repo = repoVM
+            cell.repo = repo
         }.disposed(by: disposeBag)
+    }
+    
+    func subscribeToLoading() {
+        repoViewModel.isLoading.subscribe(onNext: { (loading) in
+            if loading {
+                self.shouldPresentLoadingView(true)
+            }else {
+                self.shouldPresentLoadingView(false)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToValidData() {
+        repoViewModel.isValidDataSource.subscribe(onNext: { (valid) in
+            if valid {
+                self.tableView.isHidden = false
+            }else {
+                self.tableView.isHidden = true
+            }
+        }).disposed(by: disposeBag)
+        
+        repoViewModel.errorString.subscribe(onNext: { (string) in
+            if !string.isEmpty {
+                self.shouldPresentAlertView(true, title: "SORRY", alertText: string, actionTitle: "Ok", errorView: nil)
+            }
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -62,27 +85,6 @@ extension SearchVC: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         view.endEditing(true)
-    }
-}
-
-
-
-// MARK: - NETWORKING
-extension SearchVC {
-    func getReposData(query: String) -> Observable<[RepoModelData]> {
-        shouldPresentLoadingView(true)
-        NetworkServices.request(endPoint: Versi_EndPoints.listCompletedOrders(q: query), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
-            self.shouldPresentLoadingView(false)
-            if reposData != nil && statusCode == 200 {
-                if let data = reposData?.items {
-                    self.dataSource.onNext(data)
-                }
-            }else {
-                self.shouldPresentAlertView(true, title: "SORRY", alertText: errorString ?? "", actionTitle: "Ok", errorView: nil)
-                self.dataSource.onNext([])
-            }
-        }
-        return dataSource
     }
 }
 

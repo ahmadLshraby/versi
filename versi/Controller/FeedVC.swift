@@ -15,57 +15,70 @@ class FeedVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let refreshControl = UIRefreshControl()
-    var dataSource = PublishSubject<[RepoModelData]>()
+    let repoViewModel = RepoViewModel()
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getReposData()
+        repoViewModel.getReposData()
         bindTableView()
+        subscribeToLoading()
+        subscribeToValidData()
         setupRefreshControl()
     }
     
     func bindTableView() {
-        dataSource.bind(to: tableView.rx.items(cellIdentifier: "FeedCell")) {
+        repoViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "FeedCell")) {
             (row, repo: RepoModelData, cell: FeedCell) in
-            let repoVM = RepoViewModel(repoModelData: repo)
-            cell.repo = repoVM
-            cell.openReedmeBlock = {
+            self.refreshControl.endRefreshing()
+            cell.repo = repo
+            cell.viewReedMeBtn.rx.tap.subscribe(onNext: {
                 if let url = cell.repoUrl {
                     let safariVC = SFSafariViewController(url: url)
                     self.present(safariVC, animated: true, completion: nil)
+                }else {
+                    print("no url found")
                 }
-            }
+            }).disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
+    }
+    
+    func subscribeToLoading() {
+        repoViewModel.isLoading.subscribe(onNext: { (loading) in
+            if loading {
+                self.shouldPresentLoadingView(true)
+            }else {
+                self.shouldPresentLoadingView(false)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToValidData() {
+        repoViewModel.isValidDataSource.subscribe(onNext: { (valid) in
+            if valid {
+                self.tableView.isHidden = false
+            }else {
+                self.tableView.isHidden = true
+            }
+        }).disposed(by: disposeBag)
+        
+        repoViewModel.errorString.subscribe(onNext: { (string) in
+            if !string.isEmpty {
+                self.shouldPresentAlertView(true, title: "SORRY", alertText: string, actionTitle: "Ok", errorView: nil)
+            }
+        }).disposed(by: disposeBag)
     }
     
     func setupRefreshControl() {
         tableView.refreshControl = refreshControl
         refreshControl.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Hot Github Repos 🔥", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), NSAttributedString.Key.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!])
-        refreshControl.addTarget(self, action: #selector(getReposData), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshViewModelData), for: .valueChanged)
+    }
+    
+    @objc func refreshViewModelData() {
+        repoViewModel.getReposData()
     }
     
 
-}
-
-
-
-
-// MARK: - NETWORKING
-extension FeedVC {
-    @objc func getReposData() {
-        shouldPresentLoadingView(true)
-        NetworkServices.request(endPoint: Versi_EndPoints.listCompletedOrders(q: "Swift"), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
-            self.shouldPresentLoadingView(false)
-            self.refreshControl.endRefreshing()
-            if reposData != nil && statusCode == 200 {
-                if let data = reposData?.items {
-                    self.dataSource.onNext(data)
-                }
-            }else {
-                self.shouldPresentAlertView(true, title: "SORRY", alertText: errorString ?? "", actionTitle: "Ok", errorView: nil)
-            }
-        }
-    }
 }
