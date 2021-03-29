@@ -104,56 +104,6 @@ extension UIViewController {
     }
     
     
-    @discardableResult
-    func shouldPresentScheduleView(_ status: Bool, controller: UIViewController) -> String? {
-        var fadeView: UIView?
-        var scheduleDate: String?
-        
-        if status == true {
-            fadeView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-            fadeView?.applyWithAlphaGradient(colours: [#colorLiteral(red: 0.7842705846, green: 0.7800551057, blue: 0.8006526828, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)])
-            fadeView?.alpha = 0.0
-            fadeView?.tag = 101
-            
-            let datePicker = UIDatePicker()
-            datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
-            
-            let dateChooserAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            dateChooserAlert.view.addSubview(datePicker)
-            dateChooserAlert.addAction(UIAlertAction(title: "Set", style: .cancel, handler: { (action) in
-                // Your actions here if "Done" clicked...
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = DateFormatter.Style.full
-                scheduleDate = dateFormatter.string(from: datePicker.date)
-                
-                
-                self.shouldPresentAlertView(true, title: "Done", alertText: scheduleDate, actionTitle: "Set", errorView: nil)
-                _ = self.shouldPresentScheduleView(false, controller: self)
-                
-            }))
-            let height: NSLayoutConstraint = NSLayoutConstraint(item: dateChooserAlert.view!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.1, constant: 300)
-            dateChooserAlert.view.addConstraint(height)
-            self.present(dateChooserAlert, animated: true, completion: nil)
-            
-            view.addSubview(fadeView!)
-            
-            fadeView?.fadeTo(alphaValue: 0.7, withDuration: 0.2)
-            
-            return scheduleDate
-        }else {
-            for subview in view.subviews {
-                if subview.tag == 101 {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        subview.alpha = 0.0
-                    }) { (finished) in
-                        subview.removeFromSuperview()
-                    }
-                }
-            }
-        }
-        return nil
-    }
-    
     
     
     

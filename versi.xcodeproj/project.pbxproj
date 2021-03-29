@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044300312611D67100353E56 /* ErrorModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044300302611D67100353E56 /* ErrorModelData.swift */; };
 		04AAE447261093220028E9E9 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AAE446261093220028E9E9 /* SearchCell.swift */; };
 		04AAE44A261093AF0028E9E9 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AAE449261093AF0028E9E9 /* SearchVC.swift */; };
 		04C1AACB260C9AE100D5754D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AACA260C9AE100D5754D /* AppDelegate.swift */; };
@@ -17,10 +18,7 @@
 		04C1AAF3260CA51D00D5754D /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AAF2260CA51D00D5754D /* FeedVC.swift */; };
 		04C1AAF6260CA54300D5754D /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AAF5260CA54300D5754D /* FeedCell.swift */; };
 		04C1AB15260CA8A000D5754D /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AAFB260CA8A000D5754D /* Enums.swift */; };
-		04C1AB19260CA8A000D5754D /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB00260CA8A000D5754D /* UIButtonExt.swift */; };
 		04C1AB1A260CA8A000D5754D /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB01260CA8A000D5754D /* UIViewExt.swift */; };
-		04C1AB1B260CA8A000D5754D /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB02260CA8A000D5754D /* UITableView+Ext.swift */; };
-		04C1AB1E260CA8A000D5754D /* RTLCollectionViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB05260CA8A000D5754D /* RTLCollectionViewExt.swift */; };
 		04C1AB21260CA8A000D5754D /* UIViewControllerSpinnerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB08260CA8A000D5754D /* UIViewControllerSpinnerExt.swift */; };
 		04C1AB22260CA8A000D5754D /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB09260CA8A000D5754D /* HideKeyboard.swift */; };
 		04C1AB26260CA8A000D5754D /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB0D260CA8A000D5754D /* UIImageExt.swift */; };
@@ -34,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		044300302611D67100353E56 /* ErrorModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModelData.swift; sourceTree = "<group>"; };
 		04AAE446261093220028E9E9 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		04AAE449261093AF0028E9E9 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		04C1AAC7260C9AE100D5754D /* versi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = versi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,10 +45,7 @@
 		04C1AAF2260CA51D00D5754D /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		04C1AAF5260CA54300D5754D /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		04C1AAFB260CA8A000D5754D /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		04C1AB00260CA8A000D5754D /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
 		04C1AB01260CA8A000D5754D /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
-		04C1AB02260CA8A000D5754D /* UITableView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
-		04C1AB05260CA8A000D5754D /* RTLCollectionViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTLCollectionViewExt.swift; sourceTree = "<group>"; };
 		04C1AB08260CA8A000D5754D /* UIViewControllerSpinnerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerSpinnerExt.swift; sourceTree = "<group>"; };
 		04C1AB09260CA8A000D5754D /* HideKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 		04C1AB0D260CA8A000D5754D /* UIImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
@@ -118,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				04C1AB3C260CCF6D00D5754D /* RepoModelData.swift */,
+				044300302611D67100353E56 /* ErrorModelData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -159,10 +156,7 @@
 		04C1AAFD260CA8A000D5754D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				04C1AB00260CA8A000D5754D /* UIButtonExt.swift */,
 				04C1AB01260CA8A000D5754D /* UIViewExt.swift */,
-				04C1AB02260CA8A000D5754D /* UITableView+Ext.swift */,
-				04C1AB05260CA8A000D5754D /* RTLCollectionViewExt.swift */,
 				04C1AB08260CA8A000D5754D /* UIViewControllerSpinnerExt.swift */,
 				04C1AB09260CA8A000D5754D /* HideKeyboard.swift */,
 				04C1AB0D260CA8A000D5754D /* UIImageExt.swift */,
@@ -318,9 +312,7 @@
 				04C1AB1A260CA8A000D5754D /* UIViewExt.swift in Sources */,
 				04C1AB26260CA8A000D5754D /* UIImageExt.swift in Sources */,
 				04AAE44A261093AF0028E9E9 /* SearchVC.swift in Sources */,
-				04C1AB19260CA8A000D5754D /* UIButtonExt.swift in Sources */,
 				04C1AAF3260CA51D00D5754D /* FeedVC.swift in Sources */,
-				04C1AB1B260CA8A000D5754D /* UITableView+Ext.swift in Sources */,
 				04C1AAF6260CA54300D5754D /* FeedCell.swift in Sources */,
 				04C1AB21260CA8A000D5754D /* UIViewControllerSpinnerExt.swift in Sources */,
 				04C1AB28260CA8A000D5754D /* Versi_EndPoints.swift in Sources */,
@@ -329,9 +321,9 @@
 				04C1AACB260C9AE100D5754D /* AppDelegate.swift in Sources */,
 				04C1AB3D260CCF6D00D5754D /* RepoModelData.swift in Sources */,
 				04C1AACD260C9AE100D5754D /* SceneDelegate.swift in Sources */,
-				04C1AB1E260CA8A000D5754D /* RTLCollectionViewExt.swift in Sources */,
 				04C1AB39260CCC7800D5754D /* RepoViewModel.swift in Sources */,
 				04C1AB2A260CA8A000D5754D /* EndPoint.swift in Sources */,
+				044300312611D67100353E56 /* ErrorModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,12 +9,9 @@ import Foundation
 
 
 struct Storyboards {
-    static let splash = "Splash"
-    static let login = "Login"
     static let main = "Main"
 }
 
 enum AppLanguages: String {
     case english = "en"
-    case arabic = "ar"
 }

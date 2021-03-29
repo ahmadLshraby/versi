@@ -33,10 +33,16 @@ class NetworkServices {
                             completion(200, responseObj, nil)
                         } catch  {
                             print("SUCCESS MODEL ERROR: \(error)")
-                            completion(20, nil, error.localizedDescription)
+                            completion(0, nil, error.localizedDescription)
                         }
                     }else {
-                        completion(0, nil, "Error Happened")
+                        do {
+                            let responseObj = try JSONDecoder().decode(ErrorModelData.self, from: theJsonData)
+                            completion(0, nil, responseObj.message ?? "Error Happened")
+                        } catch  {
+                            print("SUCCESS MODEL ERROR: \(error)")
+                            completion(0, nil, error.localizedDescription)
+                        }
                     }
                 }
             }else {
