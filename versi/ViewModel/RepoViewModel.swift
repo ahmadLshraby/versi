@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 class RepoViewModel {
     
@@ -35,7 +34,7 @@ class RepoViewModel {
 extension RepoViewModel {
     func getReposData() {
         isLoading.accept(true)
-        NetworkServices.request(endPoint: Versi_EndPoints.listCompletedOrders(q: query.value), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
+        NetworkServices.request(endPoint: Versi_EndPoints.listGithubRepos(q: query.value), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
             self.isLoading.accept(false)
             if reposData != nil && statusCode == 200 {
                 if let data = reposData?.items {

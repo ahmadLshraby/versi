@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import Kingfisher
 
 class SearchCell: UITableViewCell {
@@ -20,19 +18,17 @@ class SearchCell: UITableViewCell {
     
     public private (set) var repoUrl: URL?
     
-    var repo: RepoModelData? {
+    var repo: RepoCellViewMode? {
         didSet {
             nameLbl.text = repo?.name
-            descriptionLbl.text = repo?.itemDescription
-            forksCountLbl.text = "\(repo?.forksCount ?? 0)"
+            descriptionLbl.text = repo?.description
+            forksCountLbl.text = repo?.forksCount
             languageLbl.text = repo?.language
-            let reUrl = repo?.htmlURL ?? ""
-            if let url = URL(string: reUrl) {
-                repoUrl = url
+            if let imgUrl = repo?.imageUrl {
+                imgView.downsampleImageForURL(imageLink: imgUrl)
             }
-            let imUrl = repo?.owner?.avatarURL ?? ""
-            if let url = URL(string: imUrl) {
-                imgView.downsampleImageForURL(imageLink: url)
+            if let url = repo?.repoUrl {
+                repoUrl = url
             }
         }
     }

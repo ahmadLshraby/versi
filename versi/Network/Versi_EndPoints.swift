@@ -10,41 +10,47 @@ import Alamofire
 
 enum Versi_EndPoints: EndPoint {
     // Repo
-    case listCompletedOrders(q: String)
+    case listGithubRepos(q: String)
+    case listGithubJobs(description: String, fullTime: Bool, location: String)
     
     var path: String {
-        let baseURL = "https://api.github.com"
         switch self {
-        case .listCompletedOrders(let query):
-            return baseURL + "/search/repositories?\(query)&sort=stars&order=desc"
+        case .listGithubRepos(let query):
+            return "https://api.github.com/search/repositories?\(query)&sort=stars&order=desc"
+        case .listGithubJobs(let description, let fullTime, let location):
+            return "https://jobs.github.com/positions.json?description=\(description)&full_time=\(fullTime)&location=\(location)"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .listCompletedOrders:
+        case .listGithubRepos, .listGithubJobs:
             return .get
         }
     }
     
     var encoding: ParameterEncoding {
         switch self {
-        case .listCompletedOrders:
+        case .listGithubRepos, .listGithubJobs:
             return URLEncoding.default
         }
     }
     
     var headers: HTTPHeaders {
         switch self {
-        case .listCompletedOrders:
+        case .listGithubRepos, .listGithubJobs:
             return [:]
         }
     }
     
     var parameters: [String : Any] {
         switch self {
-        case .listCompletedOrders(let q):
+        case .listGithubRepos(let q):
             return ["q":q]
+        case .listGithubJobs(let description, let fullTime, let location):
+            return ["description":description,
+                    "full_time":fullTime,
+                    "location":location]
         }
     }
     

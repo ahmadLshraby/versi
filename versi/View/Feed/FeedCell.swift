@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import Kingfisher
 
 class FeedCell: UITableViewCell {
@@ -20,21 +18,18 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var viewReedMeBtn: UIButton!
     
     public private (set) var repoUrl: URL?
-    var disposeBag = DisposeBag()
     
-    var repo: RepoModelData? {
+    var repo: RepoCellViewMode? {
         didSet {
             repoNameLbl.text = repo?.name
-            repoDescLbl.text = repo?.itemDescription
-            numOfForksLbl.text = "\(repo?.forksCount ?? 0)"
+            repoDescLbl.text = repo?.description
+            numOfForksLbl.text = repo?.forksCount
             languageLbl.text = repo?.language
-            let reUrl = repo?.htmlURL ?? ""
-            if let url = URL(string: reUrl) {
-                repoUrl = url
+            if let imgUrl = repo?.imageUrl {
+                repoImgView.downsampleImageForURL(imageLink: imgUrl)
             }
-            let imUrl = repo?.owner?.avatarURL ?? ""
-            if let url = URL(string: imUrl) {
-                repoImgView.downsampleImageForURL(imageLink: url)
+            if let url = repo?.repoUrl {
+                repoUrl = url
             }
         }
     }

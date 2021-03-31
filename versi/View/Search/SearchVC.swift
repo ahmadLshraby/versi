@@ -39,7 +39,7 @@ class SearchVC: UIViewController {
         
         repoViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "SearchCell")) {
             (row, repo: RepoModelData, cell: SearchCell) in
-            cell.repo = repo
+            cell.repo = RepoCellViewMode(repo: repo)
         }.disposed(by: disposeBag)
     }
     

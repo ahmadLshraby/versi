@@ -31,7 +31,7 @@ class FeedVC: UIViewController {
         repoViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "FeedCell")) {
             (row, repo: RepoModelData, cell: FeedCell) in
             self.refreshControl.endRefreshing()
-            cell.repo = repo
+            cell.repo = RepoCellViewMode(repo: repo)
             cell.viewReedMeBtn.rx.tap.subscribe(onNext: {
                 if let url = cell.repoUrl {
                     let safariVC = SFSafariViewController(url: url)
