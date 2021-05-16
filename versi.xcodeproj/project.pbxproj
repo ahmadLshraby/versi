@@ -34,6 +34,7 @@
 		04C1AB2E260CA91000D5754D /* Inspectables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB2D260CA90F00D5754D /* Inspectables.swift */; };
 		04C1AB39260CCC7800D5754D /* RepoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB38260CCC7800D5754D /* RepoViewModel.swift */; };
 		04C1AB3D260CCF6D00D5754D /* RepoModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1AB3C260CCF6D00D5754D /* RepoModelData.swift */; };
+		04F303602651505800D2F474 /* NetworkServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F3035F2651505800D2F474 /* NetworkServicesError.swift */; };
 		A3C8F6FA1BB7658A939A6AB7 /* Pods_versi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38BED8B1C1D1E04879EBE253 /* Pods_versi.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		04C1AB2D260CA90F00D5754D /* Inspectables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inspectables.swift; sourceTree = "<group>"; };
 		04C1AB38260CCC7800D5754D /* RepoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoViewModel.swift; sourceTree = "<group>"; };
 		04C1AB3C260CCF6D00D5754D /* RepoModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoModelData.swift; sourceTree = "<group>"; };
+		04F3035F2651505800D2F474 /* NetworkServicesError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkServicesError.swift; sourceTree = "<group>"; };
 		0729E83B5819B9E04E9ABF27 /* Pods-versi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-versi.debug.xcconfig"; path = "Target Support Files/Pods-versi/Pods-versi.debug.xcconfig"; sourceTree = "<group>"; };
 		38BED8B1C1D1E04879EBE253 /* Pods_versi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_versi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE83DA66844A1E9B7F1A161 /* Pods-versi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-versi.release.xcconfig"; path = "Target Support Files/Pods-versi/Pods-versi.release.xcconfig"; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				04C1AB10260CA8A000D5754D /* Versi_EndPoints.swift */,
+				04F3035F2651505800D2F474 /* NetworkServicesError.swift */,
 				04C1AB11260CA8A000D5754D /* NetworkServices.swift */,
 				04C1AB12260CA8A000D5754D /* EndPoint.swift */,
 			);
@@ -363,6 +366,7 @@
 				04C1AB2A260CA8A000D5754D /* EndPoint.swift in Sources */,
 				044300312611D67100353E56 /* ErrorModelData.swift in Sources */,
 				042CF8202611ECFB002F371F /* JobModelData.swift in Sources */,
+				04F303602651505800D2F474 /* NetworkServicesError.swift in Sources */,
 				0405CEA326144B8100D3563C /* JobCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

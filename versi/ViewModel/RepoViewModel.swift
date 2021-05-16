@@ -23,9 +23,9 @@ class RepoViewModel {
             if !query.isEmpty {
                 self?.getReposData()
             }
-            })
-            .disposed(by: disposeBag)
-        }
+        })
+        .disposed(by: disposeBag)
+    }
     
 }
 
@@ -34,20 +34,22 @@ class RepoViewModel {
 extension RepoViewModel {
     func getReposData() {
         isLoading.accept(true)
-        NetworkServices.request(endPoint: Versi_EndPoints.listGithubRepos(q: query.value), responseClass: ReposData.self) { (statusCode, reposData, errorString) in
-            self.isLoading.accept(false)
-            if reposData != nil && statusCode == 200 {
-                if let data = reposData?.items {
-                    self.isValidDataSource.accept(true)
-                    self.errorString.accept("")
-                    self.dataSource.onNext(data)
-                }else {
-                    self.isValidDataSource.accept(false)
-                    self.errorString.accept(errorString ?? "")
+        NetworkServices.request(endPoint: Versi_EndPoints.listGithubRepos(q: query.value), responseClass: ReposData.self) { [weak self] (reposData, networkError) in
+            self?.isLoading.accept(false)
+            if let data = reposData?.items {
+                self?.isValidDataSource.accept(true)
+                self?.errorString.accept("")
+                self?.dataSource.onNext(data)
+            }else if let error = networkError {
+                self?.isValidDataSource.accept(false)
+                switch error {
+                case .connectionError(connection: let msg):
+                    self?.errorString.accept(msg)
+                case .responseError(response: let msg):
+                    self?.errorString.accept(msg)
+                case .authenticationError:
+                    self?.errorString.accept("You are not authorized")
                 }
-            }else {
-                self.isValidDataSource.accept(false)
-                self.errorString.accept(errorString ?? "")
             }
         }
     }

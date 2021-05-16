@@ -36,14 +36,14 @@ enum Versi_EndPoints: EndPoint {
         }
     }
     
-    var headers: HTTPHeaders {
+    var headers: HTTPHeaders? {
         switch self {
         case .listGithubRepos, .listGithubJobs:
-            return [:]
+            return nil
         }
     }
     
-    var parameters: [String : Any] {
+    var parameters: Parameters? {
         switch self {
         case .listGithubRepos(let q):
             return ["q":q]

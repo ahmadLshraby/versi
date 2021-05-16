@@ -41,20 +41,22 @@ class JobViewModel {
 extension JobViewModel {
     func getJobsData() {
         isLoading.accept(true)
-        NetworkServices.request(endPoint: Versi_EndPoints.listGithubJobs(description: description.value, fullTime: fullTime.value, location: location.value), responseClass: [JobModelData].self) { (statusCode, jobsData, errorString) in
-            self.isLoading.accept(false)
-            if jobsData != nil && statusCode == 200 {
-                if let data = jobsData {
-                    self.isValidDataSource.accept(true)
-                    self.errorString.accept("")
-                    self.dataSource.onNext(data)
-                }else {
-                    self.isValidDataSource.accept(false)
-                    self.errorString.accept(errorString ?? "")
+        NetworkServices.request(endPoint: Versi_EndPoints.listGithubJobs(description: description.value, fullTime: fullTime.value, location: location.value), responseClass: [JobModelData].self) { [weak self] (jobsData, networkError) in
+            self?.isLoading.accept(false)
+            if let data = jobsData {
+                self?.isValidDataSource.accept(true)
+                self?.errorString.accept("")
+                self?.dataSource.onNext(data)
+            }else if let error = networkError {
+                self?.isValidDataSource.accept(false)
+                switch error {
+                case .connectionError(connection: let msg):
+                    self?.errorString.accept(msg)
+                case .responseError(response: let msg):
+                    self?.errorString.accept(msg)
+                case .authenticationError:
+                    self?.errorString.accept("You are not authorized")
                 }
-            }else {
-                self.isValidDataSource.accept(false)
-                self.errorString.accept(errorString ?? "")
             }
         }
     }

@@ -10,46 +10,45 @@ import Alamofire
 
 class NetworkServices {
     
-    class func request<T: Codable> (endPoint: EndPoint, responseClass: T.Type, completion: @escaping (Int?, T?, String?) -> Void) {
+    class func request<T: Codable> (endPoint: EndPoint, responseClass: T.Type, completion: @escaping (T?, NetworkServicesError?) -> Void) {
         if let connected = NetworkReachabilityManager()?.isReachable {
             if connected {
                 print("ENDPOINT PATH: \(endPoint.path)\nENDPOINT PARAMS: \(endPoint.parameters)")
                 AF.request(endPoint.path, method: endPoint.method, parameters: endPoint.parameters, encoding: endPoint.encoding, headers: endPoint.headers).responseJSON { (response) in
                     guard let statusCode = response.response?.statusCode else {
-                        completion(0, nil, "Code Error")
+                        completion(nil, .responseError(response: "Code Error"))
                         return }
                     guard let jsonResponse = try? response.result.get() else {
-                        completion(0, nil, "JSON Response Error")
+                        completion(nil, .responseError(response: "JSON Response Error"))
                         return }
                     guard let theJsonData = try? JSONSerialization.data(withJSONObject: jsonResponse, options: .prettyPrinted) else {
-                        completion(0, nil, "JSON Data Error")
+                        completion(nil, .responseError(response: "JSON Data Error"))
                         return }
                     print("STATUS CODE: \(statusCode)")
                     print("RESPONSE: \(jsonResponse)")
                     // SUCCESS MODEL
-                    if statusCode == 200 {
+                    if response.error == nil {
                         do {
                             let responseObj = try JSONDecoder().decode(T.self, from: theJsonData)
-                            completion(200, responseObj, nil)
+                            completion(responseObj, nil)
                         } catch  {
-                            print("SUCCESS MODEL ERROR: \(error)")
-                            completion(0, nil, error.localizedDescription)
+                            do {
+                                let responseObj = try JSONDecoder().decode(ErrorModelData.self, from: theJsonData)
+                                completion(nil, .responseError(response: responseObj.message ?? "Error Happened"))
+                            } catch  {
+                                print("SUCCESS MODEL ERROR: \(error)")
+                                completion(nil, .responseError(response: error.localizedDescription))
+                            }
                         }
-                    }else {
-                        do {
-                            let responseObj = try JSONDecoder().decode(ErrorModelData.self, from: theJsonData)
-                            completion(0, nil, responseObj.message ?? "Error Happened")
-                        } catch  {
-                            print("SUCCESS MODEL ERROR: \(error)")
-                            completion(0, nil, error.localizedDescription)
-                        }
+                    }else if let error = response.error {
+                        completion(nil, .responseError(response: error.localizedDescription))
                     }
                 }
             }else {
-                completion(0, nil, "Please, Check Your Internet Connection")
+                completion(nil, .connectionError(connection: "Please, Check Your Internet Connection"))
             }
         }else {
-            completion(0, nil, "Please, Check Your Internet Connection")
+            completion(nil, .connectionError(connection: "Please, Check Your Internet Connection"))
         }
     }
     

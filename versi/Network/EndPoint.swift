@@ -12,7 +12,7 @@ protocol EndPoint {
     
     var path: String { get }
     var method: HTTPMethod { get }
-    var headers: HTTPHeaders { get }
-    var parameters: [String: Any] { get }
+    var headers: HTTPHeaders? { get }
+    var parameters: Parameters? { get }
     var encoding: ParameterEncoding { get }
 }
